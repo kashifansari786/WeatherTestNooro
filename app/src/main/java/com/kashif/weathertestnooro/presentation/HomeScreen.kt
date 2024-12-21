@@ -1,5 +1,8 @@
 package com.kashif.weathertestnooro.presentation
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.CircularProgressIndicator
@@ -8,6 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -19,19 +25,14 @@ import com.kashif.weathertestnooro.presentation.components.WeatherIconWithTemper
 import com.kashif.weathertestnooro.utils.Resources
 
 /**
- * Created by Mohammad Kashif Ansari on 17,December,2024
+ * Created by Mohammad Kashif Ansari on 20,December,2024
  */
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(viewModels: HomeViewModel, navController: NavController) {
-
-    // Collect saved city and weather state from the ViewModel
-    val savedCity by viewModels.savedCity.collectAsState(initial = null)
+fun HomeScreen(viewModels: HomeViewModel,navController: NavController) {
+    // Collect  weather state from the ViewModel
     val weatherState by viewModels.weatherState.collectAsState()
 
-    // Trigger loading weather data when saved city changes
-    LaunchedEffect(savedCity) {
-        savedCity?.let { viewModels.loadWeather(it) }
-    }
 
     // Main Column to organize UI components vertically
     Column(modifier = Modifier.fillMaxSize()) {
@@ -64,5 +65,3 @@ fun HomeScreen(viewModels: HomeViewModel, navController: NavController) {
         }
     }
 }
-
-
